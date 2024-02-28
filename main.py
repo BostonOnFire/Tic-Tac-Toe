@@ -1,11 +1,12 @@
 import os
-from aux_functions import board_gen, whose_turn
+from aux_functions import board_gen, whose_turn, win_condition
 
 coordinates = {1:'1', 2:'2', 3:'3', #Dictionary for navigating board coortinates with 1-9 input
                4:'4', 5:'5', 6:'6',
                7:'7', 8:'8', 9:'9'}
 
 ongoing = True #Variable to track if the game still continues
+finished = False
 turn = 0 #Variable to determine whether it's even (X) or odd (O) turn
 turn_rep = -1 #Variable for error handling (turn to repeat)
 
@@ -23,3 +24,17 @@ while ongoing:
         if not coordinates[int(choice)] in {'X', 'O'}: #Checks if selected field has already been taken by X or O
             turn += 1
             coordinates[int(choice)] = whose_turn(turn) #Fills selected field with current player's symbol (X or O)
+    if win_condition(coordinates):
+        ongoing, finished = False, True
+    if turn > 8:
+        ongoing = False
+
+os.system('cls' if os.name == 'nt' else 'clear')
+board_gen(coordinates)
+if finished:
+    if whose_turn(turn) == 'X':
+        print("Gracz 1 wygrywa! Gratulacje!")
+    else:
+        print("Gracz 2 wygrywa! Gratulacje!")
+else:
+    print("Remis")
