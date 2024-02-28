@@ -35,14 +35,23 @@ def gameplay():
             ongoing = False
     os.system('cls' if os.name == 'nt' else 'clear') #Clears screen one last time
     board_gen(coordinates) #Generates end board state
-    #Shows the winner or a draw if there's none
+    #Statement shows the winner or a draw if there's none and writes the result into txt file
     if finished:
         if whose_turn(turn) == 'X':
             print("Gracz 1 wygrywa! Gratulacje!")
+            wynik = open("wyniki.txt", "a")
+            wynik.write("Gracz 1 wygrywa!")
+            wynik.close()
         else:
             print("Gracz 2 wygrywa! Gratulacje!")
+            wynik = open("wyniki.txt", "a")
+            wynik.write("Gracz 2 wygrywa!")
+            wynik.close()
     else:
         print("Remis")
+        wynik = open("wyniki.txt", "a")
+        wynik.write("Remis")
+        wynik.close()
 
 #Main menu function
 def main():
